@@ -29,14 +29,14 @@ def search_address(query):
 #-------------------------------------------------------------------
 
 #-------------For Unpack Latitude and Longitude------------------------------------
-def unpack_lat_lon(data, transport_type, port_or_airport_or_address_name):
+def unpack_lat_lon(data, transport_type, port_or_airport_or_address_name, country):
     if transport_type == "Water Freight" :
-        lat = float(data.loc[data["Port Name"] == port_or_airport_or_address_name, "Latitude"])
-        lon = float(data.loc[data["Port Name"] == port_or_airport_or_address_name, "Longitude"])
+        lat = float(data.loc[(data["Port Name"] == port_or_airport_or_address_name) & (data["Country"] == country), "Latitude"])
+        lon = float(data.loc[(data["Port Name"] == port_or_airport_or_address_name) & (data["Country"] == country), "Longitude"])
         return [lat,lon]
     elif transport_type == "Air Freight":
-        lat = float(data.loc[data["Airport Name"] == port_or_airport_or_address_name, "Latitude"])
-        lon = float(data.loc[data["Airport Name"] == port_or_airport_or_address_name, "Longitude"])
+        lat = float(data.loc[(data["Airport Name"] == port_or_airport_or_address_name) & (data["Country"] == country), "Latitude"])
+        lon = float(data.loc[(data["Airport Name"] == port_or_airport_or_address_name) & (data["Country"] == country), "Longitude"])
         return [lat,lon]
     else : # Land Freight
         lat = float(search_address(port_or_airport_or_address_name)[0]["lat"])
@@ -191,8 +191,8 @@ with colReviewButton :
 
 with colReview :
     if st.session_state.show_content_water_review and st.session_state.show_content_water_input and st.session_state.show_content_water_input_2:
-        [lat1, lon1] = unpack_lat_lon(ports_data, "Water Freight", selected_port)
-        [lat2, lon2] = unpack_lat_lon(ports_data, "Water Freight", selected_port_2)
+        [lat1, lon1] = unpack_lat_lon(ports_data, "Water Freight", selected_port, selected_country_port)
+        [lat2, lon2] = unpack_lat_lon(ports_data, "Water Freight", selected_port_2, selected_country_port_2)
 
         review_table = pd.DataFrame({
             "Transport Type": ["Water Freight", "Water Freight"],
@@ -216,8 +216,8 @@ with colReview :
 
 
     if st.session_state.show_content_land_review and st.session_state.show_content_land_input and st.session_state.show_content_land_input_2:
-        [lat1, lon1] = unpack_lat_lon(ports_data, "Land Freight", selected_address)
-        [lat2, lon2] = unpack_lat_lon(ports_data, "Land Freight", selected_address_2)
+        [lat1, lon1] = unpack_lat_lon(ports_data, "Land Freight", selected_address, "")
+        [lat2, lon2] = unpack_lat_lon(ports_data, "Land Freight", selected_address_2, "")
 
         review_table = pd.DataFrame({
             "Transport Type": ["Land Freight", "Land Freight"],
@@ -241,8 +241,8 @@ with colReview :
 
 
     if st.session_state.show_content_air_review and st.session_state.show_content_air_input and st.session_state.show_content_air_input_2:
-        [lat1, lon1] = unpack_lat_lon(airports_data, "Air Freight", selected_airport)
-        [lat2, lon2] = unpack_lat_lon(airports_data, "Air Freight", selected_airport_2)
+        [lat1, lon1] = unpack_lat_lon(airports_data, "Air Freight", selected_airport, selected_country_airport)
+        [lat2, lon2] = unpack_lat_lon(airports_data, "Air Freight", selected_airport_2, selected_country_airport_2)
 
         review_table = pd.DataFrame({
             "Transport Type": ["Air Freight", "Air Freight"],
