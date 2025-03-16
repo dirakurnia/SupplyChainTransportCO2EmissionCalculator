@@ -1,0 +1,4 @@
+﻿Transport Type,Emission Factor,Source
+Water Freight,0.015,https://www.theguardian.com/environment/2014/nov/02/environmental-impact-of-shipping-goods
+Land Freight,0.1106,https://library.edf.org/AssetLink/c6l6u662aa027518edh624a0775kyi82.pdf
+Air Freight,0.6605,https://www.theguardian.com/environment/2014/nov/02/environmental-impact-of-shipping-goods
