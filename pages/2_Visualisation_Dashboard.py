@@ -4,10 +4,8 @@ import networkx as nx
 import osmnx as ox
 import folium
 import math
-from geopy.distance import geodesic
 from streamlit_folium import st_folium
-import scipy
-import sklearn
+
 
 st.set_page_config(layout="wide")
 
