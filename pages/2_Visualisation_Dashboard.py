@@ -1,7 +1,5 @@
 import pandas as pd
 import streamlit as st
-# import networkx as nx
-# import osmnx as ox
 import folium
 import math
 from streamlit_folium import st_folium
