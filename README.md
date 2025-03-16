@@ -16,5 +16,5 @@ This repository contains a CO₂ emission calculation app that estimates carbon 
 - Implement faster route optimization for long-distance trips.
 - Expand the database with more ports, airports, and freight hubs.
 - Improve accuracy by integrating additional GIS and emissions data sources.
-- 
+  
 Contributions are welcome! 🚀 Feel free to fork, suggest improvements, or report issues. 💡
