@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
-import networkx as nx
-import osmnx as ox
+# import networkx as nx
+# import osmnx as ox
 import folium
 import math
 from streamlit_folium import st_folium
@@ -32,34 +32,34 @@ def distance_2_points(lat1, lon1, lat2, lon2):
 # ---------------------------------------------------------------------------------------------------
 
 # ----LONG RUNTIME, JUST AS REFERENCE----For Calculating Water and Land Best Route and It's Distance between Addresses--------
-def route_distance_2_points(lat1, lon1, lat2, lon2, transport_type):
-
-    landway_filter = {'highway': True}  # Filter for roads and paths (landways)
-    waterway_filter = {'waterway': True}  # Filter for waterways (rivers, canals, etc.)
-
-    if transport_type == "Land Freight" :
-        G = ox.graph_from_point((lat1,lon1), dist=500*1000, custom_filter=landway_filter, simplify=True)
-    else : # transport_type == "Water Freight" :
-        G = ox.graph_from_point((lat1,lon1), dist=500*1000, custom_filter=waterway_filter, simplify=True)
-
-    # Find nearest network nodes to start and end points
-    orig_node = ox.distance.nearest_nodes(G, X=lon1, Y=lat1)
-    dest_node = ox.distance.nearest_nodes(G, X=lon2, Y=lat2)
-
-    # Compute path (Dijkstra's algorithm)
-    route = nx.shortest_path(G, orig_node, dest_node, weight="length")
-
-    # Calculate the total distance of the route in meters
-    total_distance_meters = 0
-    for u, v in zip(route[:-1], route[1:]):  # Iterating over each edge in the path
-        total_distance_meters += G[u][v][0]['length']  # Getting the length of each edge
-
-    # Convert distance from meters to kilometers
-    total_distance_km = total_distance_meters / 1000
-
-    # Convert route nodes to coordinates
-    route_coords = [(G.nodes[n]['y'], G.nodes[n]['x']) for n in route]
-    return total_distance_km, route_coords
+# def route_distance_2_points(lat1, lon1, lat2, lon2, transport_type):
+#
+#     landway_filter = {'highway': True}  # Filter for roads and paths (landways)
+#     waterway_filter = {'waterway': True}  # Filter for waterways (rivers, canals, etc.)
+#
+#     if transport_type == "Land Freight" :
+#         G = ox.graph_from_point((lat1,lon1), dist=500*1000, custom_filter=landway_filter, simplify=True)
+#     else : # transport_type == "Water Freight" :
+#         G = ox.graph_from_point((lat1,lon1), dist=500*1000, custom_filter=waterway_filter, simplify=True)
+#
+#     # Find nearest network nodes to start and end points
+#     orig_node = ox.distance.nearest_nodes(G, X=lon1, Y=lat1)
+#     dest_node = ox.distance.nearest_nodes(G, X=lon2, Y=lat2)
+#
+#     # Compute path (Dijkstra's algorithm)
+#     route = nx.shortest_path(G, orig_node, dest_node, weight="length")
+#
+#     # Calculate the total distance of the route in meters
+#     total_distance_meters = 0
+#     for u, v in zip(route[:-1], route[1:]):  # Iterating over each edge in the path
+#         total_distance_meters += G[u][v][0]['length']  # Getting the length of each edge
+#
+#     # Convert distance from meters to kilometers
+#     total_distance_km = total_distance_meters / 1000
+#
+#     # Convert route nodes to coordinates
+#     route_coords = [(G.nodes[n]['y'], G.nodes[n]['x']) for n in route]
+#     return total_distance_km, route_coords
 # ---------------------------------------------------------------------------------------------------
 
 
